@@ -2,4 +2,4 @@
 
 include dirname(dirname(__FILE__)) . '/Application/app.php';
 
-Application\Bootstrap::run();
+Application\Bootstrap::run()->init(APP . 'config.php');
