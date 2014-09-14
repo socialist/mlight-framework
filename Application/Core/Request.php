@@ -48,7 +48,7 @@ class Request {
         $params = $this->clearArray(explode("/", $request));
         
         if(count($params) === 0) {
-            $params = array('default', 'index');
+            $params = array('index', 'index');
         }
         $this->_params = $params;
     }

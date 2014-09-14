@@ -27,6 +27,11 @@ class Config {
         $this->_attributes[$name] = $value;
     }
     
+    public function __isset($name)
+    {
+        return array_key_exists($name, $this->_attributes);
+    }
+    
     private function setData($data)
     {
         if( !is_array($data) ) return null;

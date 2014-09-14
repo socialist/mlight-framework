@@ -27,6 +27,23 @@ class Bootstrap {
         MLight::app()->config = $this->_config;
         MLight::app()->request = new Request();
         
-        Dump::log(MLight::app());
+        $this->initController();
+    }
+    
+    private function initController()
+    {
+        $controller = ucfirst(MLight::app()->request->getControllerName());
+        $action     = MLight::app()->request->getActionName() . 'Action';
+        if(!file_exists(APP . 'Controller/' . $controller . '.php')) {
+            throw new \Exception('Контроллер ' . $controller . ' не существует');
+        } else {
+            $controller = 'Application\\Controller\\' . $controller;
+            $controller = new $controller();
+        }
+        if(!method_exists($controller, $action)) {
+            throw new Exception("Контроллер {$controller} не имеет действия {$action}");
+        } else {
+            $controller->$action();
+        }
     }
 }
