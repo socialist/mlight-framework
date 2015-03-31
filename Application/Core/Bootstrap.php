@@ -1,7 +1,7 @@
 <?php
 namespace Application\Core;
 /**
- * Description of ABootstrap
+ * Description of Bootstrap
  *
  * @author walk
  */
@@ -16,7 +16,7 @@ class Bootstrap {
         spl_autoload_register([$this, 'autoload']);
     }
     
-    public static function run()
+    public static function app()
     {
         if(null === self::$_instance) {
             self::$_instance = new self();
@@ -24,7 +24,7 @@ class Bootstrap {
         return self::$_instance;
     }
     
-    public function init( $config )
+    public function run( $config )
     {
         $this->_config = new Config(include($config));
         

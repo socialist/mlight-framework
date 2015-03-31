@@ -1,2 +1,2 @@
-This is Index
+This is Index File
 <?php //echo $var ?>
