@@ -1,5 +1,7 @@
 <?php
 namespace Application\Core;
+
+use Application\Core\Exceptions\NotExistsException as NotExistsException;
 /**
  * Description of Bootstrap
  *
@@ -26,12 +28,19 @@ class Bootstrap {
     
     public function run( $config )
     {
-        $this->_config = new Config(include($config));
+        try {
+            $this->_config = new Config($config);
         
-        MLight::app()->config = $this->_config;
-        MLight::app()->request = new Request();
+            MLight::app()->config = $this->_config;
+            MLight::app()->request = new Request();
         
-        $this->initController();
+            $this->initController();
+        } catch(NotExistsException $e) {
+            echo $e->getMessage();
+        }
+        catch(\Exception $e) {
+            $e->getMessage();
+        }
     }
     
     protected function autoload($className)
@@ -48,13 +57,13 @@ class Bootstrap {
         $controller = ucfirst(MLight::app()->request->getControllerName());
         $action     = MLight::app()->request->getActionName() . 'Action';
         if(!file_exists(APP . 'Controller/' . $controller . '.php')) {
-            throw new \Exception('Контроллер ' . $controller . ' не существует');
+            throw new NotExistsException( 'Контроллер ' . $controller . ' не существует');
         } else {
             $controller = 'Application\\Controller\\' . $controller;
             $controller = new $controller();
         }
         if(!method_exists($controller, $action)) {
-            throw new Exception("Контроллер {$controller} не имеет действия {$action}");
+            throw new NotExistsException("Контроллер " . $controller->name() . " не имеет действия {$action}");
         } else {
             $controller->$action();
         }

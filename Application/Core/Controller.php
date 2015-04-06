@@ -48,6 +48,11 @@ class Controller {
         $this->layout = APP . 'Views/layout/' . $layout;
     }
     
+    public function name()
+    {
+        return __CLASS__;
+    }
+    
     protected function init()
     {
         

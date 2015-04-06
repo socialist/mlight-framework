@@ -51,6 +51,7 @@ class Request {
             $params = array('index', 'index');
         }
         $this->_params = $params;
+        \Application\Core\Dump::log($this->_params);
     }
     
     private function clearArray( $array )

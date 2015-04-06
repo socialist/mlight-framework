@@ -7,41 +7,58 @@ namespace Application\Core;
  */
 class Config {
     
-    private $_attributes = array();
+    private $params = array();
     
-    public function __construct( $config )
+    public function __construct($config)
     {
-        $this->setData($config);
+        if(is_array($config)) {
+            $this->params = $this->setArrayParams($config);
+        } else if($config instanceof StdClass) {
+            $this->params = $config;
+        } else if(file_exists($config)) {
+            $this->params = $this->parseFile($config);
+        } else {
+            throw new \Exception("Unknown configuration format");
+        }
     }
     
     public function __get($name)
     {
-        if(array_key_exists($name, $this->_attributes)) {
-            return $this->_attributes[$name];
+        if(array_key_exists($name, $this->params)) {
+            return $this->params->$name;
         }
         return null;
     }
     
     public function __set($name, $value)
     {
-        $this->_attributes[$name] = $value;
+        $this->params->$name = $value;
     }
     
     public function __isset($name)
     {
-        return array_key_exists($name, $this->_attributes);
+        return array_key_exists($name, $this->params);
+    }
+  
+    protected function setArrayParams(array $array)
+    {
+        $std = new \StdClass();
+        foreach($array as $key =>$val) {
+            if(is_array($val)) {
+                $std->$key = $this->setArrayParams($val);
+            } else {
+                $std->$key = $val;
+            }
+        }
+        return $std;
     }
     
-    private function setData($data)
+    protected function parseFile($file)
     {
-        if( !is_array($data) ) return null;
-        foreach ($data as $key => $value) {
-            if(is_array($value)) {
-                $this->$key = new self($value);
-                continue;
-            }
-            $this->$key = $value;
+        if(preg_match('/(.*)\.php$/i',$file)) {
+            return $this->setArrayParams(include($file));
+        } else {
+            throw new \Exception('Unknown configuratiin file type');
         }
-        return $this;
     }
 }
