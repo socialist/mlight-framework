@@ -2,6 +2,8 @@
 
 namespace Application\Core;
 
+
+use Application\Core\Exceptions\NotExistsException as NotExistsException;
 /**
  * Description of Controller
  *
@@ -60,20 +62,20 @@ class Controller {
     
     private function buildPage($tmpl, array $params, $layout)
     {
+        
         extract($params, EXTR_OVERWRITE);
         if($this->layout) {
             if(!file_exists($this->layout . '.php')) {
-                throw new \Exception('Неверно задан путь к макету страницы');
+                throw new NotExistsException('Неверно задан путь к макету страницы');
             }
             if(!file_exists($tmpl . '.php')) {
-                throw new \Exception('Неверно задан путь к файлу шаблона');
+                throw new NotExistsException('Неверно задан путь к файлу шаблона');
             }
-            
             $content = $this->renderTemplate($tmpl . '.php', $params);
             include($this->layout . '.php');
         } else {
             if(!file_exists($tmpl . '.php')) {
-                throw new \Exception('Неверно задан путь к файлу шаблона');
+                throw new NotExistsException('Неверно задан путь к файлу шаблона');
             }
             include($tmpl . '.php');
         }

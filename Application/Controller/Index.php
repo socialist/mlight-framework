@@ -13,4 +13,9 @@ class Index extends \Application\Core\Controller {
     {
         $this->render();
     }
+    
+    public function infoAction()
+    {
+        $this->render();
+    }
 }

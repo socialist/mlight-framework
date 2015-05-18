@@ -44,7 +44,17 @@ class Request {
     
     private function parseRequest()
     {
-        $request = $this->serverInfo('REQUEST_URI');
+        /*
+        echo "<pre>";
+        print_r($_SERVER);
+        echo "</pre>";
+        */
+        if(isset($this->_get['r'])) {
+            $request = $this->_get['r'];
+        } else {
+            $request = $this->serverInfo('REQUEST_URI');
+        }
+        
         $params = $this->clearArray(explode("/", $request));
         
         if(count($params) === 0) {

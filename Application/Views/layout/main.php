@@ -5,6 +5,8 @@
         <meta http-equiv="Content-Type" content="text/htnl; charset=utf-8" />
         
         <title><?php echo $this->title ?></title>
+        
+        <link rel="styleheet" href="" type="text/css" />
     </head>
     
     <body>
