@@ -5,7 +5,8 @@ namespace Application;
  *
  * @author walk
  */
-include_once dirname(__FILE__) . '/Core/Bootstrap.php';
 
-class Bootstrap extends Core\Bootstrap {    //put your code here
+class Bootstrap extends \Application\Core\Bootstrap
+{
+
 }

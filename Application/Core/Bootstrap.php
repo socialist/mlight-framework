@@ -14,9 +14,7 @@ class Bootstrap {
     private $_config;
     private static $_instance;
     
-    private function __construct() {
-        spl_autoload_register([$this, 'autoload']);
-    }
+    private function __construct() {}
     
     public static function app()
     {
@@ -41,15 +39,6 @@ class Bootstrap {
         catch(\Exception $e) {
             $e->getMessage();
         }
-    }
-    
-    protected function autoload($className)
-    {
-        $basePath = dirname(dirname(dirname(__FILE__)));
-        
-        $path = '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className).'.php';
-        
-        require_once($basePath . $path);
     }
     
     private function initController()
