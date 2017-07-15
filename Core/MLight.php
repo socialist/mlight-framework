@@ -1,5 +1,5 @@
 <?php
-namespace Application\Core;
+namespace Core;
 /**
  * Description of App
  *
@@ -9,7 +9,7 @@ class MLight {
     
     private static $_instance;
     
-    private $_attributes = array();
+    private $_attributes = [];
     
     private function __construct() {}
     

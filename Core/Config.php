@@ -1,5 +1,5 @@
 <?php
-namespace Application\Core;
+namespace Core;
 /**
  * Description of Config
  *
@@ -7,7 +7,7 @@ namespace Application\Core;
  */
 class Config {
     
-    private $params = array();
+    private $params = [];
     
     public function __construct($config)
     {

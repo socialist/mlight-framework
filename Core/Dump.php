@@ -1,5 +1,5 @@
 <?php
-namespace Application\Core;
+namespace Core;
 /**
  * Description of Dump
  *

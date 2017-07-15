@@ -1,13 +1,12 @@
 <?php
-namespace Application\Core;
+namespace Core;
 
-use Application\Core\Exceptions\NotExistsException as NotExistsException;
+use Core\Exceptions\NotExistsException;
 /**
  * Description of Bootstrap
  *
  * @author walk
  */
-define('APP', dirname(dirname(__FILE__)) . '/');
 
 class Bootstrap {
     
@@ -37,7 +36,7 @@ class Bootstrap {
             echo $e->getMessage();
         }
         catch(\Exception $e) {
-            $e->getMessage();
+            echo $e->getMessage();
         }
     }
     
@@ -45,12 +44,14 @@ class Bootstrap {
     {
         $controller = ucfirst(MLight::app()->request->getControllerName());
         $action     = MLight::app()->request->getActionName() . 'Action';
+
         if(!file_exists(APP . 'Controller/' . $controller . '.php')) {
             throw new NotExistsException( 'Контроллер ' . $controller . ' не существует');
         } else {
-            $controller = 'Application\\Controller\\' . $controller;
-            $controller = new $controller();
+            $controllerName = 'Application\\Controller\\' . $controller;
+            $controller = new $controllerName();
         }
+
         if(!method_exists($controller, $action)) {
             throw new NotExistsException("Контроллер " . $controller->name() . " не имеет действия {$action}");
         } else {

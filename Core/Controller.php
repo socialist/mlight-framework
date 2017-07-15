@@ -1,9 +1,9 @@
 <?php
 
-namespace Application\Core;
+namespace Core;
 
 
-use Application\Core\Exceptions\NotExistsException as NotExistsException;
+use Core\Exceptions\NotExistsException;
 /**
  * Description of Controller
  *
@@ -15,7 +15,7 @@ class Controller {
     public $title = '';
     protected $request;
     protected $layout;
-    private $_path;
+    private $path;
     
     public function __construct()
     {
@@ -25,7 +25,7 @@ class Controller {
         if(isset($config->layout)) {
             $this->setLayout($config->layout);
         }
-        $this->_path   = (isset($config->viewPath)) ? $config->viewPath : APP . 'Views/';
+        $this->path   = (isset($config->viewPath)) ? $config->viewPath : APP . 'Views/';
         $this->title = (isset($config->title)) ? $config->title : $this->title;
         
         $this->init();
@@ -42,7 +42,7 @@ class Controller {
                 : $controller . '/' . $action;
         $params = ( $params ) ? $params : array();
         
-        $this->buildPage($this->_path . $tmplPath, $params, $this->layout);
+        $this->buildPage($this->path . $tmplPath, $params, $this->layout);
     }
     
     public function setLayout($layout)
@@ -52,7 +52,7 @@ class Controller {
     
     public function name()
     {
-        return __CLASS__;
+        return self::class;
     }
     
     protected function init()

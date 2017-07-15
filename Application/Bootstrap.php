@@ -5,8 +5,9 @@ namespace Application;
  *
  * @author walk
  */
+define('APP', __DIR__ . '/');
 
-class Bootstrap extends \Application\Core\Bootstrap
+class Bootstrap extends \Core\Bootstrap
 {
 
 }

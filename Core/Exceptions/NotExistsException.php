@@ -1,5 +1,5 @@
 <?php
-namespace Application\Core\Exceptions;
+namespace Core\Exceptions;
 
 
 
