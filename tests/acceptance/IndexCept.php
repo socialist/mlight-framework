@@ -1,8 +1,4 @@
 <?php
-
-/**
- * @propery string $scenario
- */
 $I = new AcceptanceTester($scenario);
 $I->am('user');
 $I->wantTo('This is Index File');

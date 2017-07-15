@@ -9,7 +9,7 @@ class Request {
     
     private $post    = [];
     private $get     = [];
-    private $fies    = [];
+//    private $fies    = [];
     private $cookie  = [];
     private $session = [];
     private $params  = [];

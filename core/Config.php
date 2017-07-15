@@ -13,7 +13,7 @@ class Config {
     {
         if(is_array($config)) {
             $this->params = $this->setArrayParams($config);
-        } else if($config instanceof StdClass) {
+        } else if($config instanceof \StdClass) {
             $this->params = $config;
         } else if(file_exists($config)) {
             $this->params = $this->parseFile($config);
