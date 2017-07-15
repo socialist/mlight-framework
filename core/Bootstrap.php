@@ -1,7 +1,7 @@
 <?php
-namespace Core;
+namespace core;
 
-use Core\Exceptions\NotExistsException;
+use core\exceptions\NotExistsException;
 /**
  * Description of Bootstrap
  *
@@ -42,13 +42,13 @@ class Bootstrap {
     
     private function initController()
     {
-        $controller = ucfirst(MLight::app()->request->getControllerName());
-        $action     = MLight::app()->request->getActionName() . 'Action';
+        $controller = MLight::app()->request->getControllerName();
+        $action     = MLight::app()->request->getActionName();
 
-        if(!file_exists(APP . 'Controller/' . $controller . '.php')) {
+        if(!file_exists(APP . 'controller/' . $controller . '.php')) {
             throw new NotExistsException( 'Контроллер ' . $controller . ' не существует');
         } else {
-            $controllerName = 'Application\\Controller\\' . $controller;
+            $controllerName = 'application\\controller\\' . $controller;
             $controller = new $controllerName();
         }
 

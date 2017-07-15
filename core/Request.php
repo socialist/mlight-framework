@@ -1,5 +1,5 @@
 <?php
-namespace Core;
+namespace core;
 /**
  * Description of Request
  *
@@ -42,7 +42,8 @@ class Request {
      */
     public function getControllerName()
     {
-        return (isset($this->params[0])) ? $this->params[0] : 'index';
+        $controller = (isset($this->params[0])) ? $this->params[0] : 'index';
+        return ucfirst($controller);
     }
 
     /**
@@ -50,7 +51,14 @@ class Request {
      */
     public function getActionName()
     {
-        return (isset($this->params[1])) ? $this->params[1] : 'index';
+        $action = (isset($this->params[1])) ? $this->params[1] : 'index';
+
+        return "{$action}Action";
+    }
+
+    public function getRequestURI()
+    {
+        return implode('/', $this->params);
     }
 
     private function parseRequest()
@@ -60,9 +68,9 @@ class Request {
         } else {
             $request = $this->serverInfo('REQUEST_URI');
         }
-        
+
         $params = explode('/', $this->clear($request));
-        
+
         if(count($params) === 0) {
             $params = array('index', 'index');
         }
@@ -75,7 +83,7 @@ class Request {
      */
     private function clear( $path )
     {
-        if (strpos($path, '/') !== false) {
+        if (strpos($path, '/') === 0) {
             $path = substr($path, 1);
         }
         return $path;

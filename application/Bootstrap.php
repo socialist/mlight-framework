@@ -1,5 +1,5 @@
 <?php
-namespace Application;
+namespace application;
 /**
  * Description of Bootstrap
  *
@@ -7,7 +7,7 @@ namespace Application;
  */
 define('APP', __DIR__ . '/');
 
-class Bootstrap extends \Core\Bootstrap
+class Bootstrap extends \core\Bootstrap
 {
 
 }

@@ -1,12 +1,13 @@
 <?php
 
-namespace Core;
+namespace core;
 
 
-use Core\Exceptions\NotExistsException;
+use core\exceptions\NotExistsException;
 /**
  * Description of Controller
  *
+ * @property Request $request
  * @author walk
  */
 class Controller {
@@ -25,7 +26,7 @@ class Controller {
         if(isset($config->layout)) {
             $this->setLayout($config->layout);
         }
-        $this->path   = (isset($config->viewPath)) ? $config->viewPath : APP . 'Views/';
+        $this->path   = (isset($config->viewPath)) ? $config->viewPath : APP . 'views/';
         $this->title = (isset($config->title)) ? $config->title : $this->title;
         
         $this->init();
@@ -36,18 +37,17 @@ class Controller {
     
     public function render($tmplPath = false, $params = false)
     {
-        $controller = $this->request->getControllerName();
-        $action = $this->request->getActionName();
+        $controller = strtolower($this->request->getControllerName());
         $tmplPath = ( $tmplPath ) ? $controller . '/' . $tmplPath 
-                : $controller . '/' . $action;
+                : $this->request->getRequestURI();
         $params = ( $params ) ? $params : array();
-        
+
         $this->buildPage($this->path . $tmplPath, $params, $this->layout);
     }
     
     public function setLayout($layout)
     {
-        $this->layout = APP . 'Views/layout/' . $layout;
+        $this->layout = APP . 'views/layout/' . $layout;
     }
     
     public function name()

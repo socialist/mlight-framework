@@ -1,7 +1,7 @@
 <?php
-namespace Application\Controller;
+namespace application\controller;
 
-use Core\Controller;
+use core\Controller;
 /**
  * Description of Index
  *
