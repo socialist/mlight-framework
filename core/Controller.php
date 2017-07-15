@@ -21,6 +21,7 @@ class Controller {
     public function __construct()
     {
         $this->request = MLight::app()->request;
+
         
         $config = MLight::app()->config;
         if(isset($config->layout)) {
@@ -62,26 +63,28 @@ class Controller {
     
     private function buildPage($tmpl, array $params, $layout)
     {
-        
+        if (!$layout) {
+            $layout = $this->layout;
+        }
         extract($params, EXTR_OVERWRITE);
-        if($this->layout) {
-            if(!file_exists($this->layout . '.php')) {
+        if($layout) {
+            if(!file_exists("{$layout}.php")) {
                 throw new NotExistsException('Неверно задан путь к макету страницы');
             }
-            if(!file_exists($tmpl . '.php')) {
+            if(!file_exists("{$tmpl}.php")) {
                 throw new NotExistsException('Неверно задан путь к файлу шаблона');
             }
-            $content = $this->renderTemplate($tmpl . '.php', $params);
-            include($this->layout . '.php');
+            $content = $this->renderTemplate("{$tmpl}.php", $params);
+            include("{$layout}.php");
         } else {
-            if(!file_exists($tmpl . '.php')) {
+            if(!file_exists("{$tmpl}.php")) {
                 throw new NotExistsException('Неверно задан путь к файлу шаблона');
             }
-            include($tmpl . '.php');
+            include("{$tmpl}.php");
         }
     }
     
-    private function renderTemplate($tmpl, $params = false)
+    private function renderTemplate($tmpl, $params = [])
     {
         extract($params, EXTR_OVERWRITE);
         ob_start();

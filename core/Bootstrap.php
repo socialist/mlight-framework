@@ -49,6 +49,9 @@ class Bootstrap {
             throw new NotExistsException( 'Контроллер ' . $controller . ' не существует');
         } else {
             $controllerName = 'application\\controller\\' . $controller;
+            /**
+             * @var Controller $controller
+             */
             $controller = new $controllerName();
         }
 
